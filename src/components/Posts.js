@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { List } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -22,7 +23,9 @@ const Posts = () => {
         <List.Item key={post.id}>
           <List.Icon name="github" size="large" verticalAlign="middle" />
           <List.Content>
-            <List.Header as="a">{post.title}</List.Header>
+            <Link className="header" to={`/posts/${post.id}`}>
+              {post.title}
+            </Link>
             <List.Description as="a">{post.created_at} </List.Description>
           </List.Content>
         </List.Item>
