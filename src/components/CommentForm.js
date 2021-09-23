@@ -20,21 +20,27 @@ const CommentForm = (props) => {
           setCommentForm(INITIAL_COMMENT);
         }}
       >
-        <Input
-          name="display_name"
-          value={commentForm.display_name}
-          placeholder="Your name..."
-          onChange={handleCommentFormChange}
-          size="mini"
-        />
+        <Form.Field>
+          <label>Your Name</label>
+          <Input
+            name="display_name"
+            value={commentForm.display_name}
+            placeholder="Your name..."
+            onChange={handleCommentFormChange}
+            size="mini"
+          />
+        </Form.Field>
 
-        <TextArea
-          name="body"
-          value={commentForm.body}
-          placeholder="Your comment..."
-          onChange={handleCommentFormChange}
-        />
-
+        <Form.Field>
+          <label>Comment</label>
+          <TextArea
+            name="body"
+            value={commentForm.body}
+            placeholder="Your comment..."
+            onChange={handleCommentFormChange}
+          />
+        </Form.Field>
+        
         <Button type="submit" primary>
           Send Comment
         </Button>
