@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Header } from "semantic-ui-react";
+import { api } from "../api";
 import PostComments from "./PostComments";
 
 const PostDetail = (props) => {
@@ -10,9 +11,9 @@ const PostDetail = (props) => {
 
   const handleCommentSubmit = (event, commentForm) => {
     event.preventDefault();
-    axios
+    api()
       .post(
-        `https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`,
+        `/posts/${id}/comments`,
         commentForm
       )
       .then((res) => {
@@ -26,9 +27,9 @@ const PostDetail = (props) => {
   useEffect(() => {
     axios
       .all([
-        axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}`),
-        axios.get(
-          `https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`
+        api().get(`/posts/${id}`),
+        api().get(
+          `/posts/${id}/comments`
         ),
       ])
       .then((responses) => {

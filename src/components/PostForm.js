@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { Form, TextArea, Input, Button, Header } from "semantic-ui-react";
+import { api } from "../api";
 
 const INITIAL_POST_FORM = {
   title: "",
@@ -17,8 +17,8 @@ const PostForm = (props) => {
 
   const handlePostFormSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post(`https://react-yazi-yorum.herokuapp.com/posts`, postForm)
+    api()
+      .post(`/posts`, postForm)
       .then((res) => {
         setPostForm(INITIAL_POST_FORM);
         props.history.push("/");

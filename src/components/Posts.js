@@ -1,14 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { api } from "../api";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://react-yazi-yorum.herokuapp.com/posts")
+    api()
+      .get("/posts")
       .then((res) => {
         setPosts(res.data);
       })
