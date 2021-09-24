@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const url = "https://react-yazi-yorum.herokuapp.com/posts";
+const url = "https://react-yazi-yorum.herokuapp.com";
 
 export const api = () => {
-  axios.create({
+  return axios.create({
     baseURL: url,
   });
 };
