@@ -27,17 +27,27 @@ export const getPost = (id) => (dispatch) => {
     });
 };
 
-export const sendComment = (id, commentForm) => (dispatch) => {
+export const createPost = (postForm, history) => (dispatch) => {
   api()
-    .post(`/posts/${id}/comments`, commentForm)
+    .post(`/posts`, postForm)
     .then((response) => {
-      dispatch({ type: "SEND_COMMENT", payload: response.data });
+      dispatch({ type: "CREATE_POST", payload: response.data });
+      history.push("/");
     })
     .catch((err) => {
-      dispatch({
-        type: "SEND_COMMENT_ERROR",
-        payload: "Error sending comment",
-      });
+      dispatch({ type: "CREATE_POST_ERROR", payload: "Error creating post" });
+    });
+};
+
+export const updatePost = (id, postForm, history) => (dispatch) => {
+  api()
+    .put(`/posts/${id}`, postForm)
+    .then((response) => {
+      dispatch({ type: "UPDATE_POST", payload: response.data });
+      history.push(`/posts/${id}`);
+    })
+    .catch((err) => {
+      dispatch({ type: "UPDATE_POST_ERROR", payload: "Error updating post" });
     });
 };
 
@@ -54,3 +64,17 @@ export const deletePost =
         dispatch({ type: "DELETE_POST_ERROR", payload: "Error deleting post" });
       });
   };
+
+export const sendComment = (id, commentForm) => (dispatch) => {
+  api()
+    .post(`/posts/${id}/comments`, commentForm)
+    .then((response) => {
+      dispatch({ type: "SEND_COMMENT", payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "SEND_COMMENT_ERROR",
+        payload: "Error sending comment",
+      });
+    });
+};

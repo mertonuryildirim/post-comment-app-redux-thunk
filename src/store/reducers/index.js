@@ -9,8 +9,10 @@ const INITIAL_STATE = {
     comments: [],
   },
   postError: "",
-  sendCommentError: "",
+  createPostError: "",
+  updatePostError: "",
   deletePostError: "",
+  sendCommentError: "",
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
@@ -23,6 +25,30 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, postError: "", post: action.payload };
     case "GET_POST_ERROR":
       return { ...state, postError: action.payload };
+    case "CREATE_POST":
+      return {
+        ...state,
+        createPostError: "",
+        posts: [...state.posts, action.payload],
+      };
+    case "CREATE_POST_ERROR":
+      return { ...state, createPostError: action.payload };
+    case "UPDATE_POST":
+      return {
+        ...state,
+        updatePostError: "",
+        post: { ...state.post, ...action.payload },
+      };
+    case "UPDATE_POST_ERROR":
+      return { ...state, updatePostError: action.payload };
+    case "DELETE_POST":
+      return {
+        ...state,
+        deletePostError: "",
+        posts: state.posts.filter((post) => post.id !== action.payload),
+      };
+    case "DELETE_POST_ERROR":
+      return { ...state, deletePostError: action.payload };
     case "SEND_COMMENT":
       return {
         ...state,
@@ -34,14 +60,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
       };
     case "SEND_COMMENT_ERROR":
       return { ...state, sendCommentError: action.payload };
-    case "DELETE_POST":
-      return {
-        ...state,
-        deletePostError: "",
-        posts: state.posts.filter((post) => post.id !== action.payload),
-      };
-    case "DELETE_POST_ERROR":
-      return { ...state, deletePostError: action.payload };
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { Form, TextArea, Input, Button } from "semantic-ui-react";
-import { api } from "../../api";
+import { createPost, updatePost } from "../../store/actions";
 
 const INITIAL_POST_FORM = {
   title: "",
@@ -11,6 +12,7 @@ const INITIAL_POST_FORM = {
 const PostForm = (props) => {
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [postForm, setPostForm] = useState(INITIAL_POST_FORM);
 
   const handlePostFormChange = (event) => {
@@ -20,24 +22,9 @@ const PostForm = (props) => {
   const handlePostFormSubmit = (event) => {
     event.preventDefault();
     if (props.post) {
-      api()
-        .put(`/posts/${id}`, postForm)
-        .then((res) => {
-          history.push(`/posts/${id}`);
-        })
-        .catch((err) => {
-          return err;
-        });
+      dispatch(updatePost(id, postForm, history));
     } else {
-      api()
-        .post(`/posts`, postForm)
-        .then((res) => {
-          setPostForm(INITIAL_POST_FORM);
-          history.push("/");
-        })
-        .catch((err) => {
-          return err;
-        });
+      dispatch(createPost(postForm, history));
     }
   };
 
