@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Header } from "semantic-ui-react";
-import { api } from "../api";
-import PostComments from "./PostComments";
+import { Link } from "react-router-dom";
+import { Header, Button } from "semantic-ui-react";
+import { api } from "../../api";
+import PostComments from "../comments/PostComments";
 
 const PostDetail = (props) => {
   const { id } = props.match.params;
@@ -12,10 +13,7 @@ const PostDetail = (props) => {
   const handleCommentSubmit = (event, commentForm) => {
     event.preventDefault();
     api()
-      .post(
-        `/posts/${id}/comments`,
-        commentForm
-      )
+      .post(`/posts/${id}/comments`, commentForm)
       .then((res) => {
         setComments([...comments, res.data]);
       })
@@ -26,12 +24,7 @@ const PostDetail = (props) => {
 
   useEffect(() => {
     axios
-      .all([
-        api().get(`/posts/${id}`),
-        api().get(
-          `/posts/${id}/comments`
-        ),
-      ])
+      .all([api().get(`/posts/${id}`), api().get(`/posts/${id}/comments`)])
       .then((responses) => {
         setPostDetail(responses[0].data);
         setComments(responses[1].data);
@@ -46,6 +39,13 @@ const PostDetail = (props) => {
       <Header as="h2">{postDetail.title}</Header>
       <p>{postDetail.content}</p>
       <p>{postDetail.created_at} </p>
+
+      <Button.Group>
+        <Link to={`/update-post/${id}`}>
+          <Button primary>Edit</Button>
+        </Link>
+        <Button color="red">Delete</Button>
+      </Button.Group>
 
       <PostComments
         comments={comments}

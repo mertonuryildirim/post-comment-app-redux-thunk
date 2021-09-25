@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { api } from "../api";
+import { api } from "../../api";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
