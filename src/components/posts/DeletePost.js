@@ -1,17 +1,33 @@
 import React from "react";
 import { useState } from "react/cjs/react.development";
 import { Button, Modal } from "semantic-ui-react";
+import { api } from "../../api";
 
-const DeletePost = () => {
+const DeletePost = (props) => {
+  const { postDetail, push } = props;
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
 
   const handleOpenDeletePostModal = () => setShowDeletePostModal(true);
 
   const handleCloseDeletePostModal = () => setShowDeletePostModal(false);
 
+  const handleDeletePost = (id) => {
+    api()
+      .delete(`/posts/${id}`)
+      .then(() => {
+        handleCloseDeletePostModal();
+        push("/");
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
   return (
     <>
-      <Button negative onClick={handleOpenDeletePostModal}>Delete</Button>
+      <Button negative onClick={handleOpenDeletePostModal}>
+        Delete
+      </Button>
 
       <Modal
         size="mini"
@@ -26,7 +42,7 @@ const DeletePost = () => {
           <Button negative onClick={handleCloseDeletePostModal}>
             No
           </Button>
-          <Button positive onClick={() => {}}>
+          <Button positive onClick={() => handleDeletePost(postDetail.id)}>
             Yes
           </Button>
         </Modal.Actions>

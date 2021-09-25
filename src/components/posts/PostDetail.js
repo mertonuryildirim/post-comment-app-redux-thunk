@@ -45,7 +45,7 @@ const PostDetail = (props) => {
         <Link to={`/update-post/${id}`}>
           <Button primary>Edit</Button>
         </Link>
-        <DeletePost />
+        <DeletePost postDetail={postDetail} push={props.history.push} />
       </Button.Group>
 
       <PostComments
