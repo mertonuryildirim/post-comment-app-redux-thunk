@@ -26,3 +26,17 @@ export const getPost = (id) => (dispatch) => {
       });
     });
 };
+
+export const sendComment = (id, commentForm) => (dispatch) => {
+  api()
+    .post(`/posts/${id}/comments`, commentForm)
+    .then((response) => {
+      dispatch({ type: "SEND_COMMENT", payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "SEND_COMMENT_ERROR",
+        payload: "Error sending comment",
+      });
+    });
+};

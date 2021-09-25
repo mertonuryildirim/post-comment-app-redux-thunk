@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Header, Button } from "semantic-ui-react";
-import { api } from "../../api";
-import { getPost } from "../../store/actions";
+import { getPost, sendComment } from "../../store/actions";
 import PostComments from "../comments/PostComments";
 import DeletePost from "./DeletePost";
 
@@ -14,14 +13,7 @@ const PostDetail = () => {
 
   const handleCommentSubmit = (event, commentForm) => {
     event.preventDefault();
-    api()
-      .post(`/posts/${id}/comments`, commentForm)
-      .then((res) => {
-        //setComments([...comments, res.data]);
-      })
-      .catch((err) => {
-        return err;
-      });
+    dispatch(sendComment(id, commentForm));
   };
 
   useEffect(() => {

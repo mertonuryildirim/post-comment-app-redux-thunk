@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     comments: [],
   },
   postError: "",
+  sendCommentError: "",
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +22,16 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, post: action.payload };
     case "GET_POST_ERROR":
       return { ...state, postError: action.payload };
+    case "SEND_COMMENT":
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [...state.post.comments, action.payload],
+        },
+      };
+    case "SEND_COMMENT_ERROR":
+      return { ...state, sendCommentError: action.payload };
     default:
       return state;
   }
