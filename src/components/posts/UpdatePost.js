@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { Header } from "semantic-ui-react";
 import { api } from "../../api";
 import PostForm from "./PostForm";
 
 const UpdatePost = (props) => {
-  const { id } = props.match.params;
+  const { id } = useParams();
   const [post, setPost] = useState({});
 
   useEffect(() => {

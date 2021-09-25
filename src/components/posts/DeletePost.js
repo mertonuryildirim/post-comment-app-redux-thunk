@@ -1,10 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { Button, Modal } from "semantic-ui-react";
 import { api } from "../../api";
 
 const DeletePost = (props) => {
-  const { postDetail, push } = props;
+  const history = useHistory()
+  const { postDetail } = props;
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
 
   const handleOpenDeletePostModal = () => setShowDeletePostModal(true);
@@ -16,7 +18,7 @@ const DeletePost = (props) => {
       .delete(`/posts/${id}`)
       .then(() => {
         handleCloseDeletePostModal();
-        push("/");
+        history.push("/");
       })
       .catch((err) => {
         return err;

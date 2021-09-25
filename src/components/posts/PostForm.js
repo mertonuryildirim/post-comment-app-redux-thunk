@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Form, TextArea, Input, Button } from "semantic-ui-react";
 import { api } from "../../api";
 
@@ -9,6 +9,8 @@ const INITIAL_POST_FORM = {
 };
 
 const PostForm = (props) => {
+  const { id } = useParams();
+  const history = useHistory();
   const [postForm, setPostForm] = useState(INITIAL_POST_FORM);
 
   const handlePostFormChange = (event) => {
@@ -19,9 +21,9 @@ const PostForm = (props) => {
     event.preventDefault();
     if (props.post.title) {
       api()
-        .put(`/posts/${props.match.params.id}`, postForm)
+        .put(`/posts/${id}`, postForm)
         .then((res) => {
-          props.history.push(`/posts/${props.match.params.id}`);
+          history.push(`/posts/${id}`);
         })
         .catch((err) => {
           return err;
@@ -31,7 +33,7 @@ const PostForm = (props) => {
         .post(`/posts`, postForm)
         .then((res) => {
           setPostForm(INITIAL_POST_FORM);
-          props.history.push("/");
+          history.push("/");
         })
         .catch((err) => {
           return err;
@@ -40,7 +42,7 @@ const PostForm = (props) => {
   };
 
   useEffect(() => {
-    console.log(props)
+    console.log(props);
     if (props.post)
       setPostForm({ title: props.post.title, content: props.post.content });
   }, [props]);
@@ -76,4 +78,4 @@ const PostForm = (props) => {
   );
 };
 
-export default withRouter(PostForm);
+export default PostForm;

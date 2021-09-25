@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Header, Button } from "semantic-ui-react";
 import { api } from "../../api";
 import PostComments from "../comments/PostComments";
 import DeletePost from "./DeletePost";
 
 const PostDetail = (props) => {
-  const { id } = props.match.params;
+  const { id } = useParams();
   const [postDetail, setPostDetail] = useState({});
   const [comments, setComments] = useState([]);
 
@@ -45,7 +45,7 @@ const PostDetail = (props) => {
         <Link to={`/update-post/${id}`}>
           <Button primary>Edit</Button>
         </Link>
-        <DeletePost postDetail={postDetail} push={props.history.push} />
+        <DeletePost postDetail={postDetail} />
       </Button.Group>
 
       <PostComments
