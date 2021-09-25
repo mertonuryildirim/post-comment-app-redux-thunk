@@ -19,7 +19,7 @@ const PostForm = (props) => {
 
   const handlePostFormSubmit = (event) => {
     event.preventDefault();
-    if (props.post.title) {
+    if (props.post) {
       api()
         .put(`/posts/${id}`, postForm)
         .then((res) => {
@@ -42,7 +42,6 @@ const PostForm = (props) => {
   };
 
   useEffect(() => {
-    console.log(props);
     if (props.post)
       setPostForm({ title: props.post.title, content: props.post.content });
   }, [props]);
