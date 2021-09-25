@@ -1,22 +1,23 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Header, Button } from "semantic-ui-react";
 import { api } from "../../api";
+import { getPost } from "../../store/actions";
 import PostComments from "../comments/PostComments";
 import DeletePost from "./DeletePost";
 
-const PostDetail = (props) => {
+const PostDetail = () => {
   const { id } = useParams();
-  const [postDetail, setPostDetail] = useState({});
-  const [comments, setComments] = useState([]);
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.post);
 
   const handleCommentSubmit = (event, commentForm) => {
     event.preventDefault();
     api()
       .post(`/posts/${id}/comments`, commentForm)
       .then((res) => {
-        setComments([...comments, res.data]);
+        //setComments([...comments, res.data]);
       })
       .catch((err) => {
         return err;
@@ -24,32 +25,24 @@ const PostDetail = (props) => {
   };
 
   useEffect(() => {
-    axios
-      .all([api().get(`/posts/${id}`), api().get(`/posts/${id}/comments`)])
-      .then((responses) => {
-        setPostDetail(responses[0].data);
-        setComments(responses[1].data);
-      })
-      .catch((err) => {
-        return err;
-      });
-  }, [id]);
+    dispatch(getPost(id));
+  }, [id, dispatch]);
 
   return (
     <>
-      <Header as="h2">{postDetail.title}</Header>
-      <p>{postDetail.content}</p>
-      <p>{postDetail.created_at} </p>
+      <Header as="h2">{post.title}</Header>
+      <p>{post.content}</p>
+      <p>{post.created_at} </p>
 
       <Button.Group>
         <Link to={`/update-post/${id}`}>
           <Button primary>Edit</Button>
         </Link>
-        <DeletePost postDetail={postDetail} />
+        <DeletePost postDetail={post} />
       </Button.Group>
 
       <PostComments
-        comments={comments}
+        comments={post.comments}
         handleCommentSubmit={handleCommentSubmit}
       />
     </>

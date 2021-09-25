@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Button, List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../store/actions";
+import { getPosts } from "../../store/actions";
 
 const Posts = () => {
   const posts = useSelector((state) => state.posts);
