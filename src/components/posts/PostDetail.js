@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Header, Button } from "semantic-ui-react";
 import { api } from "../../api";
 import PostComments from "../comments/PostComments";
+import DeletePost from "./DeletePost";
 
 const PostDetail = (props) => {
   const { id } = props.match.params;
@@ -44,7 +45,7 @@ const PostDetail = (props) => {
         <Link to={`/update-post/${id}`}>
           <Button primary>Edit</Button>
         </Link>
-        <Button color="red">Delete</Button>
+        <DeletePost />
       </Button.Group>
 
       <PostComments
