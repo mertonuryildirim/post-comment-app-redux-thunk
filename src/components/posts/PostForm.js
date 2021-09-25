@@ -40,9 +40,10 @@ const PostForm = (props) => {
   };
 
   useEffect(() => {
-    if (props.post.title && props.post.content)
+    console.log(props)
+    if (props.post)
       setPostForm({ title: props.post.title, content: props.post.content });
-  }, [props.post]);
+  }, [props]);
 
   return (
     <Form>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { List } from "semantic-ui-react";
+import { Button, List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { api } from "../../api";
 
@@ -19,6 +19,11 @@ const Posts = () => {
 
   return (
     <List divided relaxed>
+      <div style={{ justifyContent: "end", display: "flex" }}>
+        <Link className="button" to="/create-post">
+          <Button primary>Add Post</Button>
+        </Link>
+      </div>
       {posts.map((post) => (
         <List.Item key={post.id}>
           <List.Icon name="github" size="large" verticalAlign="middle" />
