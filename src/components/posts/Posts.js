@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { api } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "../store/actions";
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    api()
-      .get("/posts")
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        return err;
-      });
-  }, []);
+    dispatch(getPosts());
+  }, [dispatch]);
 
   return (
     <List divided relaxed>
