@@ -1,24 +1,10 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router";
-import { useState } from "react/cjs/react.development";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Header } from "semantic-ui-react";
-import { api } from "../../api";
 import PostForm from "./PostForm";
 
-const UpdatePost = (props) => {
-  const { id } = useParams();
-  const [post, setPost] = useState({});
-
-  useEffect(() => {
-    api()
-      .get(`/posts/${id}`)
-      .then((res) => {
-        setPost(res.data);
-      })
-      .catch((err) => {
-        return err;
-      });
-  }, [id]);
+const UpdatePost = () => {
+  const post = useSelector((state) => state.post);
 
   return (
     <div>

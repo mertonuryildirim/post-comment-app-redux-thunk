@@ -40,3 +40,17 @@ export const sendComment = (id, commentForm) => (dispatch) => {
       });
     });
 };
+
+export const deletePost =
+  (id, handleCloseDeletePostModal, history) => (dispatch) => {
+    api()
+      .delete(`/posts/${id}`)
+      .then(() => {
+        dispatch({ type: "DELETE_POST", payload: id });
+        handleCloseDeletePostModal();
+        history.push("/");
+      })
+      .catch((err) => {
+        dispatch({ type: "DELETE_POST_ERROR", payload: "Error deleting post" });
+      });
+  };
